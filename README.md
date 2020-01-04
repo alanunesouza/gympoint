@@ -1,16 +1,16 @@
 <h1 align="center">
-  <img alt="Gympoint" title="Gympoint" src=".github/logo.png" width="200px" />
+  <img alt="GYMPOINT" title="GYMPOINT" src=".github/logo.png" width="200px" />
 </h1>
 
 <h3 align="center">
-  GYMPoint
+  GYMPOINT
 </h3>
 
 <blockquote align="center">“App gerenciador de academia”</blockquote>
 
 <p align="center">
   <a href="#rocket-sobre-o-desafio">Sobre o desafio</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-entrega">Entrega</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-entrega">Instalação</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#memo-licença">Licença</a>
 </p>
 
@@ -48,7 +48,7 @@ Durante esse desafio, foi necessário criar a aplicação ao todo (api, web e mo
 - Styled Components;
 - ESLint + Prettier + EditorConfig;
 
-## Instalação e execução do projeto
+## Instalação
 
 clone o projeto rodando o comando:
 
@@ -99,7 +99,7 @@ ANDROID
 cd mobile && yarn install && react-native run-android
 ```
 
-### Testado apenas no IOS
+Obs.: *Testado apenas no IOS*
 
 ## :memo: Licença
 
