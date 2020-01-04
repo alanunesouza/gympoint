@@ -15,21 +15,37 @@ import {
   answerHelpOrder,
   showModalHelpOrder,
 } from '~/store/modules/helpOrder/actions';
+import Pagination from '~/components/Pagination';
 
 export default function HelpOrders() {
+  const [lastPage, setLastPage] = useState(true);
+  const [page, setPage] = useState(1);
   const [answer, setAnswer] = useState(false);
   const [helpOrderSelected, setHelpOrderSelected] = useState({});
-  const { helpOrders } = useSelector(state => state.helpOrder);
+  const { helpOrders, hasMoreItems } = useSelector(state => state.helpOrder);
   const { showModal } = useSelector(state => state.helpOrder);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    async function loadHelpOrders() {
-      await dispatch(getHelpOrders());
-    }
+  async function loadHelpOrders(currentPage) {
+    await dispatch(getHelpOrders(currentPage));
 
-    loadHelpOrders();
+    setPage(currentPage);
+    setLastPage(!hasMoreItems);
+  }
+
+  useEffect(() => {
+    loadHelpOrders(1);
   }, []);
+
+  function handlePreviousPage() {
+    const currentPage = page - 1;
+    loadHelpOrders(currentPage);
+  }
+
+  function handleNextPage() {
+    const currentPage = page + 1;
+    loadHelpOrders(currentPage);
+  }
 
   function handleSubmitAnswer() {
     dispatch(answerHelpOrder(helpOrderSelected.id, answer));
@@ -55,40 +71,48 @@ export default function HelpOrders() {
   return (
     <Container>
       <div>
-        <h1>Gerenciando alunos</h1>
+        <h1>Pedidos de auxílio</h1>
       </div>
 
       <ListContainer>
-        <Table>
-          <thead>
-            {helpOrders && helpOrders.length > 0 && (
-              <tr>
-                <th>aluno</th>
-                <th> </th>
-              </tr>
-            )}
-          </thead>
-          <tbody>
-            {helpOrders &&
-              helpOrders.map(helpOrder => (
-                <tr key={helpOrder.student.id}>
-                  <td>{helpOrder.student.name}</td>
-                  <td>
-                    <Button
-                      onClick={() => {
-                        setShowModal(true);
-                        setHelpOrderSelected(helpOrder);
-                      }}
-                      color="#2054C3"
-                    >
-                      responder
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </Table>
-        {helpOrders && helpOrders.length === 0 && (
+        {helpOrders && helpOrders.length > 0 ? (
+          <>
+            <Table>
+              <thead>
+                  <tr>
+                    <th>aluno</th>
+                    <th> </th>
+                  </tr>
+              </thead>
+              <tbody>
+                {helpOrders &&
+                  helpOrders.map(helpOrder => (
+                    <tr key={helpOrder.id}>
+                      <td>{helpOrder.student.name}</td>
+                      <td>
+                        <Button
+                          onClick={() => {
+                            setShowModal(true);
+                            setHelpOrderSelected(helpOrder);
+                          }}
+                          color="#2054C3"
+                        >
+                          responder
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </Table>
+
+            <Pagination
+              lastPage={lastPage}
+              page={page}
+              handlePreviousPage={handlePreviousPage}
+              handleNextPage={handleNextPage}
+            />
+          </>
+        ) : (
           <span>
             Você não tem perguntas pendentes de serem respondidas no momento.
           </span>

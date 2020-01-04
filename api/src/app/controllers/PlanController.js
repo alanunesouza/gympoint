@@ -39,6 +39,8 @@ class PlanController {
 
   async index(req, res) {
     const { planId } = req.params;
+    const { page = 1 } = req.query;
+    const limit = 20;
     let plans;
 
     if (planId) {
@@ -54,9 +56,15 @@ class PlanController {
 
     plans = await Plan.findAll({
       attributes: ['id', 'title', 'duration', 'price'],
+      limit,
+      offset: (page - 1) * 20,
     });
 
-    return res.json(plans);
+
+    const totalItems = plans.length;
+    const hasMoreItems = page ? !((page * limit) >= totalItems) : false;
+
+    return res.json({ hasMoreItems, totalItems, content: plans });
   }
 
   async update(req, res) {

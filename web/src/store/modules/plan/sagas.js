@@ -6,9 +6,14 @@ import api from '~/services/api';
 import { getPlans, getPlansSuccess, getPlansError } from './actions';
 import history from '~/services/history';
 
-export function* get() {
+export function* get({ payload }) {
   try {
-    const response = yield call(api.get, '/plans');
+    const { page } = payload;
+    const response = yield call(api.get, '/plans', {
+      params: {
+        page,
+      },
+    });
 
     yield put(getPlansSuccess(response.data));
   } catch (err) {

@@ -10,10 +10,11 @@ import {
 } from './actions';
 import history from '~/services/history';
 
-export function* get() {
+export function* get({ payload }) {
   try {
+    const { page } = payload;
     const { data } = yield call(api.get, '/help-orders', {
-      params: { page: 1 },
+      params: { page },
     });
 
     yield put(getHelpOrdersSuccess(data));

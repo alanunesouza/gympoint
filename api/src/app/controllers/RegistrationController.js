@@ -56,8 +56,12 @@ class RegistrationController {
   }
 
   async index(req, res) {
+    const { page = 1 } = req.query;
+    const limit = 20;
+
     const registrations = await Registration.findAll({
       attributes: ['id', 'start_date', 'end_date', 'price', 'active'],
+      order: [['created_at', 'DESC']],
       include: [
         {
           model: Student,
@@ -70,9 +74,14 @@ class RegistrationController {
           attributes: ['id', 'title'],
         },
       ],
+      limit,
+      offset: (page - 1) * 20,
     });
 
-    return res.json(registrations);
+    const totalItems = registrations.length;
+    const hasMoreItems = page ? !((page * limit) >= totalItems) : false;
+
+    return res.json({ hasMoreItems, totalItems, content: registrations});
   }
 
   async update(req, res) {

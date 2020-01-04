@@ -2,6 +2,7 @@ import produce from 'immer';
 
 const INITIAL_STATE = {
   plans: [],
+  hasMoreItems: false,
   loading: false,
 };
 
@@ -14,6 +15,7 @@ export default function plan(state = INITIAL_STATE, action) {
       }
       case '@plan/GET_PLANS_SUCCESS': {
         draft.plans = action.payload.plans;
+        draft.hasMoreItems = action.payload.hasMoreItems;
         draft.loading = false;
         break;
       }

@@ -1,13 +1,14 @@
-export function getRegisters() {
+export function getRegisters(page) {
   return {
     type: '@register/GET_REGISTERS',
+    payload: { page },
   };
 }
 
-export function getRegistersSuccess(registers) {
+export function getRegistersSuccess({ hasMoreItems, totalItems, content }) {
   return {
     type: '@register/GET_REGISTERS_SUCCESS',
-    payload: { registers },
+    payload: { hasMoreItems: hasMoreItems, totalItems, registers: content },
   };
 }
 

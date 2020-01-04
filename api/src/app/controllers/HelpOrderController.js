@@ -39,6 +39,7 @@ class HelpOrderController {
   async index(req, res) {
     const { studentId } = req.params;
     const { page = 1 } = req.query;
+    const limit = 20;
 
     const student = await Student.findOne({
       where: { id: studentId },
@@ -50,8 +51,8 @@ class HelpOrderController {
 
     const helpOrders = await HelpOrder.findAll({
       where: { student_id: studentId },
-      order: ['created_at'],
-      attributes: ['id', 'question', 'answer', 'answer_at'],
+      order: [['created_at', 'DESC']],
+      attributes: ['id', 'question', 'answer', 'answer_at', 'created_at'],
       include: [
         {
           model: Student,
@@ -59,11 +60,14 @@ class HelpOrderController {
           attributes: ['name', 'email'],
         },
       ],
-      limit: 20,
+      limit,
       offset: (page - 1) * 20,
     });
 
-    return res.json(helpOrders);
+    const totalItems = helpOrders.length;
+    const hasMoreItems = page ? !((page * limit) >= totalItems) : false;
+
+    return res.json({ hasMoreItems, content: helpOrders, totalItems });
   }
 
   async indexAll(req, res) {
@@ -88,7 +92,6 @@ class HelpOrderController {
           },
         },
       });
-      const hasMoreItens = page * limit >= plansCount;
 
       const helpOrders = await HelpOrder.findAll({
         where: {
@@ -101,7 +104,11 @@ class HelpOrderController {
         offset: (page - 1) * limit,
         include,
       });
-      return res.json({ hasMoreItens, content: helpOrders });
+
+      const totalItems = helpOrders.length;
+      const hasMoreItems = page ? !((page * limit) >= totalItems) : false;
+
+      return res.json({ hasMoreItems, totalItems, content: helpOrders });
     }
 
     const helpOrders = await HelpOrder.findAll({

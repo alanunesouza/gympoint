@@ -15,6 +15,8 @@ const routes = new Router();
 routes.post('/users', UserController.store);
 routes.post('/sessions', SessionController.store);
 
+routes.get('/students/:studentId', StudentController.index);
+
 routes.post('/students/:studentId/checkins', CheckinController.store);
 routes.get('/students/:studentId/checkins', CheckinController.index);
 
@@ -31,7 +33,6 @@ routes.put('/users', UserController.update);
 routes.post('/students', StudentController.store);
 routes.put('/students', StudentController.update);
 routes.get('/students', StudentController.index);
-routes.get('/students/:studentId', StudentController.index);
 routes.delete('/students/:studentId', StudentController.delete);
 
 routes.post('/plans', PlanController.store);

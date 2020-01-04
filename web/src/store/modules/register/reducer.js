@@ -2,6 +2,7 @@ import produce from 'immer';
 
 const INITIAL_STATE = {
   registers: [],
+  hasMoreItems: false,
   loading: false,
 };
 
@@ -14,6 +15,7 @@ export default function register(state = INITIAL_STATE, action) {
       }
       case '@register/GET_REGISTERS_SUCCESS': {
         draft.registers = action.payload.registers;
+        draft.hasMoreItems = action.payload.hasMoreItems;
         draft.loading = false;
         break;
       }

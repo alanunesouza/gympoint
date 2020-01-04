@@ -12,11 +12,16 @@ import {
 } from './actions';
 import history from '~/services/history';
 
-export function* get() {
+export function* get({ payload }) {
   try {
-    const response = yield call(api.get, '/registrations');
+    const { page } = payload;
+    const response = yield call(api.get, '/registrations', {
+      params: {
+        page,
+      },
+    });
 
-    const data = response.data.map(register => ({
+    const contentWrapper = response.data.content.map(register => ({
       ...register,
       start_date_formatted: format(
         parseISO(register.start_date),
@@ -30,7 +35,9 @@ export function* get() {
       ),
     }));
 
-    yield put(getRegistersSuccess(data));
+    const { data } = response;
+
+    yield put(getRegistersSuccess({ ...data, content: contentWrapper}));
   } catch (err) {
     toast.error('Falha ao buscar matrículas');
     yield put(getRegistersError());

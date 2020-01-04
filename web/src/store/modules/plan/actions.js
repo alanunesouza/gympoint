@@ -1,13 +1,14 @@
-export function getPlans() {
+export function getPlans(page) {
   return {
     type: '@plan/GET_PLANS',
+    payload: { page },
   };
 }
 
-export function getPlansSuccess(plans) {
+export function getPlansSuccess({ hasMoreItems, totalItems, content }) {
   return {
     type: '@plan/GET_PLANS_SUCCESS',
-    payload: { plans },
+    payload: { hasMoreItems: hasMoreItems, totalItems: totalItems, plans: content },
   };
 }
 

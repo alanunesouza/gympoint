@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FiPlus } from 'react-icons/fi';
@@ -13,13 +13,19 @@ import {
   ButtonAdd,
 } from './styles';
 import { getStudents, deleteStudent } from '~/store/modules/student/actions';
+import Pagination from '~/components/Pagination';
 
 export default function Students() {
-  const { students } = useSelector(state => state.student);
+  const [lastPage, setLastPage] = useState(true);
+  const [page, setPage] = useState(1);
+  const { students, hasMoreItems } = useSelector(state => state.student);
   const dispatch = useDispatch();
 
-  async function loadStudents(page, name) {
-    await dispatch(getStudents(page, name || ''));
+  async function loadStudents(currentPage, name) {
+    await dispatch(getStudents(currentPage, name || ''));
+
+    setPage(currentPage);
+    setLastPage(!hasMoreItems);
   }
 
   useEffect(() => {
@@ -28,6 +34,16 @@ export default function Students() {
 
   function handleDeleteStudent({ id }) {
     dispatch(deleteStudent(id));
+  }
+
+  function handlePreviousPage() {
+    const currentPage = page - 1;
+    loadStudents(currentPage);
+  }
+
+  function handleNextPage() {
+    const currentPage = page + 1;
+    loadStudents(currentPage);
   }
 
   return (
@@ -55,43 +71,51 @@ export default function Students() {
       </div>
 
       <ListContainer>
-        <Table>
-          <thead>
-            {students && students.length > 0 && (
-              <tr>
-                <th>nome</th>
-                <th>e-mail</th>
-                <th>idade</th>
-                <th> </th>
-              </tr>
-            )}
-          </thead>
-          <tbody>
-            {students &&
-              students.map(student => (
-                <tr key={student.email}>
-                  <td>{student.name}</td>
-                  <td>{student.email}</td>
-                  <td>{student.age}</td>
-                  <td>
-                    <Link to={`/student/${student.id}`}>
-                      <Button color="#2054C3">editar</Button>
-                    </Link>
-                    <Button
-                      onClick={() => handleDeleteStudent(student)}
-                      color="#F44646"
-                    >
-                      apagar
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </Table>
 
-        {students && students.length === 0 && (
-          <span>Você não tem alunos cadastrados no momento.</span>
-        )}
+      {students && students.length > 0 ? (
+        <>
+          <Table>
+            <thead>
+                <tr>
+                  <th>nome</th>
+                  <th>e-mail</th>
+                  <th>idade</th>
+                  <th> </th>
+                </tr>
+            </thead>
+            <tbody>
+              {students.map(student => (
+                  <tr key={student.email}>
+                    <td>{student.name}</td>
+                    <td>{student.email}</td>
+                    <td>{student.age}</td>
+                    <td>
+                      <Link to={`/student/${student.id}`}>
+                        <Button color="#2054C3">editar</Button>
+                      </Link>
+                      <Button
+                        onClick={() => handleDeleteStudent(student)}
+                        color="#F44646"
+                      >
+                        apagar
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </Table>
+
+          <Pagination
+            lastPage={lastPage}
+            page={page}
+            handlePreviousPage={handlePreviousPage}
+            handleNextPage={handleNextPage}
+          />
+        </>
+      ) : (
+        <span>Você não tem alunos cadastrados no momento.</span>
+      )}
+
       </ListContainer>
     </Container>
   );

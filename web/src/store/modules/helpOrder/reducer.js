@@ -4,7 +4,7 @@ const INITIAL_STATE = {
   helpOrders: [],
   showModal: false,
   loading: false,
-  hasMoreItems: true,
+  hasMoreItems: false,
 };
 
 export default function helpOrder(state = INITIAL_STATE, action) {

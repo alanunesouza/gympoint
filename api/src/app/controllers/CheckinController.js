@@ -33,7 +33,9 @@ class CheckinController {
   }
 
   async index(req, res) {
+    const { page } = req.query;
     const { studentId } = req.params;
+    let limitSettings = {};
 
     const student = await Student.findOne({
       where: { id: studentId },
@@ -43,11 +45,27 @@ class CheckinController {
       return res.status(400).json({ error: 'This user is not a provider' });
     }
 
+    if (page) {
+      const limit = 20;
+
+
+      limitSettings = {
+        offset: (page - 1) * limit,
+        limit,
+      };
+    }
+
     const checkins = await Checkin.findAll({
       where: { student_id: studentId },
+      attributes: ['id', 'created_at'],
+      ...limitSettings,
+      order: [['created_at', 'DESC']],
     });
 
-    return res.json(checkins);
+    const totalItems = checkins.length;
+    const hasMoreItems = page ? !((page * limitSettings.limit) >= totalItems) : false;
+
+    return res.json({ totalItems, hasMoreItems, content: checkins });
   }
 }
 
