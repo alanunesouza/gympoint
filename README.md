@@ -10,7 +10,7 @@
 
 <p align="center">
   <a href="#rocket-sobre-o-desafio">Sobre o desafio</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-entrega">Instalação</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#instalacao">Instalação</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#memo-licença">Licença</a>
 </p>
 
@@ -48,7 +48,7 @@ Durante esse desafio, foi necessário criar a aplicação ao todo (api, web e mo
 - Styled Components;
 - ESLint + Prettier + EditorConfig;
 
-## Instalação
+## :instalacao: Instalação
 
 clone o projeto rodando o comando:
 
