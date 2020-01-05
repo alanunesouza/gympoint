@@ -2,10 +2,6 @@
   <img alt="GYMPOINT" title="GYMPOINT" src=".github/logo.png" width="200px" />
 </h1>
 
-<h3 align="center">
-  GYMPOINT
-</h3>
-
 <blockquote align="center">“App gerenciador de academia”</blockquote>
 
 <p align="center">
