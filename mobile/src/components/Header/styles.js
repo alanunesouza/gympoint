@@ -12,14 +12,14 @@ export const HeaderContainer = styled.View`
 `;
 
 export const HeaderImage = styled.Image`
-  width: 36px;
-  height: 18px;
+  width: 40px;
+  height: 20px;
 `;
 
 export const HeaderText = styled.Text`
-  font-size: 14px;
+  font-size: 16px;
   line-height: 16px;
   font-weight: bold;
-  color: #ee4e62;
+  color: #f7415a;
   margin-left: 8px;
 `;

@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.SafeAreaView`
-  background: #f2f2f2;
+  background: #eee;
   flex: 1;
 `;
 
@@ -52,5 +52,5 @@ export const Empty = styled.ScrollView.attrs({
 
 export const EmptyText = styled.Text`
   font-weight: bold;
-  color: #999999;
+  color: #999;
 `;

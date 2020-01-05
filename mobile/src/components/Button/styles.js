@@ -6,7 +6,7 @@ export const TButton = styled.TouchableOpacity`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: ${props => (props.disabled ? '#ddd' : '#ee4e62')};
+  background: ${props => (props.disabled ? '#ddd' : '#f7415a')};
   border-radius: 4px;
   height: 46px;
 `;

@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.SafeAreaView`
-  background: #f2f2f2;
+  background: #eee;
   flex: 1;
 `;
 
@@ -30,7 +30,7 @@ export const HelpOrderHeader = styled.View`
 `;
 
 export const HelpOrderAnswered = styled.Text`
-  color: ${props => (props.answered ? '#42CB59' : '#999999')};
+  color: ${props => (props.answered ? '#42CB59' : '#999')};
   font-weight: bold;
   font-size: 14px;
   line-height: 16px;
@@ -61,5 +61,5 @@ export const Empty = styled.ScrollView.attrs({
 
 export const EmptyText = styled.Text`
   font-weight: bold;
-  color: #999999;
+  color: #999;
 `;

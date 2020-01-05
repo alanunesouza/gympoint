@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import SignIn from '~/pages/SignIn';
 import Checkins from '~/pages/Checkins';
-import HelpOrdersList from '~/pages/HelpOrders';
+import HelpOrders from '~/pages/HelpOrders';
 import HelpOrderQuestion from '~/pages/HelpOrder';
 import HelpOrderAsk from '~/pages/HelpOrderAsk';
 
@@ -32,7 +32,7 @@ export default (signedIn = false) =>
               HelpOrders: {
                 screen: createStackNavigator(
                   {
-                    HelpOrdersList,
+                    HelpOrders,
                     HelpOrderQuestion,
                     HelpOrderAsk,
                   },
@@ -58,8 +58,8 @@ export default (signedIn = false) =>
               resetOnBlur: true,
               tabBarOptions: {
                 keyboardHidesTabBar: true,
-                activeTintColor: '#EE4E62',
-                inactiveTintColor: '#999999',
+                activeTintColor: '#f7415a',
+                inactiveTintColor: '#999',
               },
             }
           ),

@@ -25,9 +25,7 @@ import {
 export default function Checkins() {
   const [page, setPage] = useState(1);
   const [scrollMomentum, setScrollMomentum] = useState(false);
-  const [showLoadingMoreIndicator, setShowLoadingMoreIndicator] = useState(
-    false
-  );
+  const [showLoadingMore, setShowLoadingMore] = useState(false);
   const [moreData, setMoreData] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -83,7 +81,7 @@ export default function Checkins() {
 
     setLoadingMore(false);
     setRefreshing(false);
-    setShowLoadingMoreIndicator(false);
+    setShowLoadingMore(false);
   }
 
   async function handleCreateCheckin() {
@@ -147,12 +145,12 @@ export default function Checkins() {
               onMomentumScrollBegin={() => {
                 setScrollMomentum(true);
                 if (moreData) {
-                  setShowLoadingMoreIndicator(true);
+                  setShowLoadingMore(true);
                 }
               }}
               data={checkins}
               keyExtractor={item => String(item.id)}
-              ListFooterComponent={showLoadingMoreIndicator && renderFooter}
+              ListFooterComponent={showLoadingMore && renderFooter}
               renderItem={({ item, index }) => (
                 <Checkin>
                   <CheckinNumber>{`Check-in #${item.id}`}</CheckinNumber>

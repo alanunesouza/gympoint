@@ -27,9 +27,7 @@ import {
 function HelpOrders({ navigation, isFocused }) {
   const [page, setPage] = useState(1);
   const [scrollMomentum, setScrollMomentum] = useState(false);
-  const [showLoadingMoreIndicator, setShowLoadingMoreIndicator] = useState(
-    false
-  );
+  const [showLoadingMore, setShowLoadingMore] = useState(false);
   const [moreData, setMoreData] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -66,7 +64,7 @@ function HelpOrders({ navigation, isFocused }) {
 
     setLoadingMore(false);
     setRefreshing(false);
-    setShowLoadingMoreIndicator(false);
+    setShowLoadingMore(false);
   }
 
   useEffect(() => {
@@ -126,12 +124,12 @@ function HelpOrders({ navigation, isFocused }) {
               onMomentumScrollBegin={() => {
                 setScrollMomentum(true);
                 if (moreData) {
-                  setShowLoadingMoreIndicator(true);
+                  setShowLoadingMore(true);
                 }
               }}
               data={helpOrders}
               keyExtractor={item => String(item.id)}
-              ListFooterComponent={showLoadingMoreIndicator && renderFooter}
+              ListFooterComponent={showLoadingMore && renderFooter}
               renderItem={({ item }) => (
                 <HelpOrder
                   onPress={() =>
@@ -141,7 +139,7 @@ function HelpOrders({ navigation, isFocused }) {
                   <HelpOrderHeader>
                     <Icon
                       name="check-circle"
-                      color={item.answer ? '#42CB59' : '#999999'}
+                      color={item.answer ? '#42CB59' : '#999'}
                       size={16}
                     />
                     <HelpOrderAnswered answered={item.answer}>
